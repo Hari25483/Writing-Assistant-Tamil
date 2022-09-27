@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         body: TabBarView(
-          children: [spelling(), next_word(), synonyms(), grammer()],
+          children: [spelling(), nextword(), synonyms(), grammer()],
         ),
       ),
     );
