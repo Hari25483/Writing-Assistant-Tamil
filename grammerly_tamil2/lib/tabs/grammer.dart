@@ -28,18 +28,10 @@ class _grammerState extends State<grammer> {
             const Divider(
               height: 100,
             ),
-            RawKeyboardListener(
-              focusNode: FocusNode(),
-              onKey: (event) {
-                if (event.isKeyPressed(LogicalKeyboardKey.space)) {
-                  print("space pressed");
-                }
-              },
-              child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter the text to check spelling'),
-              ),
+            TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter the text to check spelling'),
             ),
             // TextFormField(
             //   autofocus: true,
