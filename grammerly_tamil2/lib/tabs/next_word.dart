@@ -26,11 +26,11 @@ class _next_wordState extends State<next_word> {
     text = inputTextController.text;
     print("api_text" + text);
     Response response = await get(
-        Uri.parse('http://2507-34-86-28-150.ngrok.io/spelling?name=$text'));
+        Uri.parse('http://af00-34-74-245-90.ngrok.io/spelling?name=$text'));
     print(response.toString());
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
-      // spell_suggestions = ;
+
       /// for casting
       stringList = jsonResponse.cast<String>();
       print("String list" + stringList.toString());
@@ -44,52 +44,57 @@ class _next_wordState extends State<next_word> {
 
   @override
   Widget build(BuildContext context) {
-    return RawKeyboardListener(
-      focusNode: FocusNode(),
-      autofocus: true,
-      onKey: (event) async {
-        final key = event.logicalKey;
-        if (event is RawKeyDownEvent) {
-          if (keys.contains(key)) {
-            return;
-          }
-          if (event.isKeyPressed(LogicalKeyboardKey.space)) {
-            call_api();
-            print("after api " + stringList.toString());
-            setState(() {});
-          }
-          setState(() {
-            keys.add(key);
-          });
-        } else {
-          setState(() {
-            keys.remove(key);
-          });
-        }
-      },
-      child: Container(
-        child: SingleChildScrollView(
-          child: InkWell(
-            onTap: () async {},
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                const Divider(
-                  height: 100,
-                ),
-                TextField(
-                  controller: inputTextController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter the text to check spelling',
-                  ),
-                ),
+    print("Rawkey" + stringList.toString());
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
 
-                const Divider(
-                  height: 100,
+    (context as Element).visitChildren(rebuild);
+    return Scaffold(
+      body: RawKeyboardListener(
+        focusNode: FocusNode(),
+        autofocus: true,
+        onKey: (event) async {
+          final key = event.logicalKey;
+          if (event is RawKeyDownEvent) {
+            if (keys.contains(key)) {
+              return;
+            }
+            if (event.isKeyPressed(LogicalKeyboardKey.space)) {
+              await call_api();
+              print("after api " + stringList.toString());
+            }
+            setState(() {
+              keys.add(key);
+            });
+          } else {
+            setState(() {
+              keys.remove(key);
+            });
+          }
+        },
+        child: Container(
+          // color: Colors.red,
+          child: ListView(
+            children: [
+              const Divider(
+                height: 100,
+              ),
+              TextField(
+                controller: inputTextController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter the text to check spelling',
                 ),
+              ),
 
-                TextButton(
+              const Divider(
+                height: 100,
+              ),
+
+              Center(
+                child: TextButton(
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.teal,
                     disabledForegroundColor: Colors.yellow.withOpacity(0.38),
@@ -107,26 +112,13 @@ class _next_wordState extends State<next_word> {
                             fontWeight: FontWeight.w500)),
                   ),
                 ),
+              ),
 // Generated code for this Button Widget..
-                const Divider(
-                  height: 20,
-                ),
-
-                // Container(
-                //   margin: const EdgeInsets.all(15.0),
-                //   padding: const EdgeInsets.all(3.0),
-                //   width: 300,
-                //   height: 50,
-                //   decoration:
-                //       BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-                //   child: Text(
-                //     text1,
-                //     textAlign: TextAlign.center,
-                //   ),
-                // ),
-                const DropdownButtonExample()
-              ],
-            ),
+              const Divider(
+                height: 20,
+              ),
+              const Center(child: DropdownButtonExample())
+            ],
           ),
         ),
       ),
@@ -146,6 +138,7 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
 
   @override
   Widget build(BuildContext context) {
+    print("in Widget" + stringList.toString());
     return DropdownButton<String>(
       value: null,
       // icon: const Icon(Icons.arrow_downward),
