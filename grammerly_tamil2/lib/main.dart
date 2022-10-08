@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grammerly_tamil2/tabs/grammer.dart';
+import 'package:grammerly_tamil2/tabs/grammar.dart';
 import 'package:grammerly_tamil2/tabs/next_word.dart';
 import 'package:grammerly_tamil2/tabs/spelling.dart';
 import 'package:grammerly_tamil2/tabs/synonyms.dart';
@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         body: const TabBarView(
-          children: [spelling(), next_word(), synonyms(), grammer()],
+          children: [spelling(), next_word(), synonyms(), grammar()],
         ),
       ),
     );
