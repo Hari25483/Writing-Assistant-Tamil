@@ -23,7 +23,7 @@ class _synonymsState extends State<synonyms> {
   Future<void> call_api() async {
     print("apicalled");
     Response response = await get(
-        Uri.parse('http://8bce-34-124-190-90.ngrok.io/synonyms?word=$text'));
+        Uri.parse('http://8c29-35-245-50-6.ngrok.io/synonyms?word=$text'));
     // Await the http get response, then decode the json-formatted response.
     print(response.toString());
     if (response.statusCode == 200) {

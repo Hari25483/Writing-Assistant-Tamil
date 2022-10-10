@@ -54,7 +54,7 @@ class _grammarState extends State<grammar> {
                   print(inputTextController.text);
                   text = inputTextController.text;
                   Response response = await get(Uri.parse(
-                      'http://8bce-34-124-190-90.ngrok.io//synonyms?word=$text'));
+                      'https://950b-34-91-208-7.ngrok.io/grammar_suggestion?name=grammar: $text'));
                   // Await the http get response, then decode the json-formatted response.
                   print(response.toString());
                   if (response.statusCode == 200) {
@@ -87,7 +87,7 @@ class _grammarState extends State<grammar> {
                 margin: const EdgeInsets.all(15.0),
                 padding: const EdgeInsets.all(3.0),
                 width: 300,
-                height: 50,
+                height: 150,
                 decoration:
                     BoxDecoration(border: Border.all(color: Colors.blueAccent)),
                 child: Text(

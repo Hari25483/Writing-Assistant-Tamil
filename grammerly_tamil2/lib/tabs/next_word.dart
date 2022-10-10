@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert' as convert;
-
 import 'package:http/http.dart';
 
 List<dynamic> spell_suggestions = [""];
@@ -26,7 +25,7 @@ class _next_wordState extends State<next_word> {
     text = inputTextController.text;
     print("api_text" + text);
     Response response = await get(
-        Uri.parse('http://af00-34-74-245-90.ngrok.io/spelling?name=$text'));
+        Uri.parse('http://5f16-34-87-42-121.ngrok.io/next_word?name=$text'));
     print(response.toString());
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
