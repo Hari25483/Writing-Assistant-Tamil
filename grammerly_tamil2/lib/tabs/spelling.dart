@@ -162,14 +162,18 @@ import 'dart:convert' as convert;
 
 import 'package:http/http.dart';
 
+import '../main.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+
 List<dynamic> spell_suggestions = [""];
 
-List<String> stringList = [""];
+List<String> stringList = [];
 TextEditingController inputTextController = TextEditingController();
 List<LogicalKeyboardKey> keys = [];
 String text = "";
 String text1 = "";
 bool correct = false;
+bool show_text = false;
 
 class spelling extends StatefulWidget {
   const spelling({Key? key}) : super(key: key);
@@ -179,28 +183,36 @@ class spelling extends StatefulWidget {
 }
 
 class _spellingState extends State<spelling> {
+  void showToast() {
+    setState(() {
+      correct = !correct;
+    });
+  }
+
   Future<void> call_api() async {
-    print("apicalled");
+    show_text = false;
+    //print("apicalled");
     text = inputTextController.text;
     String s = text.trim();
     String lastWord = s.substring(s.lastIndexOf(" ") + 1);
     // print(lastWord);
-    print("api_text" + lastWord);
-    Response response = await get(Uri.parse(
-        'http://a57e-35-229-36-209.ngrok.io/spelling?name=$lastWord'));
-    print(response.toString());
+    //print("api_text" + lastWord);
+    Response response =
+        await get(Uri.parse('$url_base_path/spelling?word=$lastWord'));
+    //print(response.toString());
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
-      print(jsonResponse);
+      //print(jsonResponse);
       if (jsonResponse == "Your word seems to be correct") {
-        print("Correct");
+        //print("Correct");
         correct = true;
+        setState(() {});
       } else {
-        /// for casting
+        correct == false;
+        show_text = true;
         stringList = jsonResponse.cast<String>();
-        print("String list" + stringList.toString());
-        print("api finished");
-
+        //print("String list" + stringList.toString());
+        //print("api finished");
         setState(() {});
       }
     } else {
@@ -224,20 +236,25 @@ class _spellingState extends State<spelling> {
         onKey: (event) async {
           final key = event.logicalKey;
           if (event is RawKeyDownEvent) {
+            print("1");
             if (keys.contains(key)) {
               return;
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.space)) {
-              await call_api();
-              if (correct == true) {
-                print("Correct word");
-              } else {
-                print("after api " + stringList.toString());
-              }
-            }
+            print(keys);
             setState(() {
               keys.add(key);
             });
+            if (event.isKeyPressed(LogicalKeyboardKey.space)) {
+              print("in");
+              await call_api();
+
+              keys.clear();
+              if (correct == true) {
+                //print("Correct word");
+              } else {
+                //print("after api " + stringList.toString());
+              }
+            }
           } else {
             setState(() {
               keys.remove(key);
@@ -247,8 +264,9 @@ class _spellingState extends State<spelling> {
         child: Container(
           // color: Colors.red,
           child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 20),
             children: [
-              const Divider(
+              const SizedBox(
                 height: 100,
               ),
               TextField(
@@ -259,35 +277,62 @@ class _spellingState extends State<spelling> {
                 ),
               ),
 
-              const Divider(
+              const SizedBox(
                 height: 100,
               ),
+              if (inputTextController.text.trim().isNotEmpty)
+                Visibility(
+                  visible: show_text,
+                  child: Center(
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        TypewriterAnimatedText(
+                          'Your word seems wrong.',
+                          textStyle: const TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          speed: const Duration(milliseconds: 1),
+                        ),
+                      ],
+                      totalRepeatCount: 1,
+                      pause: const Duration(milliseconds: 1),
+                      displayFullTextOnTap: true,
 
-              Center(
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.teal,
-                    disabledForegroundColor: Colors.yellow.withOpacity(0.38),
-                    side: BorderSide(color: Colors.teal, width: 2),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25))),
-                  ),
-                  onPressed: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                    child: Text('Find',
-                        style: TextStyle(
-                            color: Colors.teal,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500)),
+                      // stopPauseOnTap: true,
+                    ),
                   ),
                 ),
+              const SizedBox(
+                height: 100,
               ),
+              // Center(
+              //   child: TextButton(
+              //     style: TextButton.styleFrom(
+              //       foregroundColor: Colors.teal,
+              //       disabledForegroundColor: Colors.yellow.withOpacity(0.38),
+              //       side: BorderSide(color: Colors.teal, width: 2),
+              //       shape: const RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.all(Radius.circular(25))),
+              //     ),
+              //     onPressed: () {},
+              //     child: const Padding(
+              //       padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              //       child: Text('Find',
+              //           style: TextStyle(
+              //               color: Colors.teal,
+              //               fontSize: 14,
+              //               fontWeight: FontWeight.w500)),
+              //     ),
+              //   ),
+              // ),
 // Generated code for this Button Widget..
-              const Divider(
+              const SizedBox(
                 height: 20,
               ),
-              const Center(child: DropdownButtonExample())
+              if (stringList.isNotEmpty)
+                const Center(child: DropdownButtonExample())
             ],
           ),
         ),
@@ -311,19 +356,29 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
     // print("in Widget" + stringList.toString());
     return DropdownButton<String>(
       value: null,
-      // icon: const Icon(Icons.arrow_downward),
-      iconEnabledColor: Colors.green,
+      icon: const Icon(Icons.arrow_downward),
+      iconEnabledColor: Colors.black54,
       elevation: 16,
       style: const TextStyle(color: Colors.deepPurple),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Colors.black54,
       ),
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
           dropdownValue = value!;
-          inputTextController.text = "$text $dropdownValue";
+          //print(inputTextController.text.split(" "));
+          List<String> before_String =
+              inputTextController.text.trim().split(" ");
+          int len = before_String.length;
+          String output_text = "";
+          for (int i = 0; i < len - 1; i++) {
+            output_text = output_text + " " + before_String[i];
+          }
+
+          inputTextController.text = "$output_text $dropdownValue";
+          show_text = false;
         });
       },
       items: stringList.map<DropdownMenuItem<String>>((String value) {

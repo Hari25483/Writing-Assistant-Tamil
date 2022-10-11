@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart';
 
+import '../main.dart';
+
 List<dynamic> spell_suggestions = [""];
 
-List<String> stringList = [""];
+List<String> stringList = [];
 TextEditingController inputTextController = TextEditingController();
 List<LogicalKeyboardKey> keys = [];
 String text = "";
@@ -24,8 +26,8 @@ class _synonymsState extends State<synonyms> {
     print("apicalled");
     text = inputTextController.text;
     print("api_text" + text);
-    Response response = await get(
-        Uri.parse('http://1efe-34-75-88-187.ngrok.io/synonyms?word=$text'));
+    Response response =
+        await get(Uri.parse('$url_base_path/synonyms?word=$text'));
     print(response.toString());
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
@@ -54,8 +56,9 @@ class _synonymsState extends State<synonyms> {
       body: Container(
         // color: Colors.red,
         child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 20),
           children: [
-            const Divider(
+            const SizedBox(
               height: 100,
             ),
             TextField(
@@ -66,7 +69,7 @@ class _synonymsState extends State<synonyms> {
               ),
             ),
 
-            const Divider(
+            const SizedBox(
               height: 100,
             ),
 
@@ -93,10 +96,11 @@ class _synonymsState extends State<synonyms> {
               ),
             ),
 // Generated code for this Button Widget..
-            const Divider(
+            const SizedBox(
               height: 20,
             ),
-            const Center(child: DropdownButtonExample())
+            if (stringList.isNotEmpty)
+              const Center(child: DropdownButtonExample())
           ],
         ),
       ),

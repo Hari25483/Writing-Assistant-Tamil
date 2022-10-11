@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:grammerly_tamil2/main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
@@ -39,7 +40,7 @@ class _grammarState extends State<grammar> {
                     hintText: 'Enter the text to check spelling'),
               ),
 
-              const Divider(
+              const SizedBox(
                 height: 100,
               ),
               TextButton(
@@ -54,7 +55,7 @@ class _grammarState extends State<grammar> {
                   print(inputTextController.text);
                   text = inputTextController.text;
                   Response response = await get(Uri.parse(
-                      'https://950b-34-91-208-7.ngrok.io/grammar_suggestion?name=grammar: $text'));
+                      '$url_base_path/grammar_suggestion?name=grammar: $text'));
                   // Await the http get response, then decode the json-formatted response.
                   print(response.toString());
                   if (response.statusCode == 200) {
@@ -79,7 +80,7 @@ class _grammarState extends State<grammar> {
                 ),
               ),
 // Generated code for this Button Widget..
-              const Divider(
+              const SizedBox(
                 height: 50,
               ),
 

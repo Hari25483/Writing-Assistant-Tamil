@@ -4,6 +4,8 @@ import 'package:grammerly_tamil2/tabs/next_word.dart';
 import 'package:grammerly_tamil2/tabs/spelling.dart';
 import 'package:grammerly_tamil2/tabs/synonyms.dart';
 
+String url_base_path = "http://35eb-35-194-156-222.ngrok.io/";
+
 void main() {
   runApp(MaterialApp(home: MyApp()));
 }
@@ -26,7 +28,7 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: const Color(0xFF008080),
           automaticallyImplyLeading: false,
           title: const Text(
-            'Grammerly',
+            'Grammarly',
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,

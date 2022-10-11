@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart';
 
+import '../main.dart';
+
 List<dynamic> spell_suggestions = [""];
 
-List<String> stringList = [""];
+List<String> stringList = [];
 TextEditingController inputTextController = TextEditingController();
 List<LogicalKeyboardKey> keys = [];
 String text = "";
@@ -24,8 +26,8 @@ class _next_wordState extends State<next_word> {
     print("apicalled");
     text = inputTextController.text;
     print("api_text" + text);
-    Response response = await get(
-        Uri.parse('http://5f16-34-87-42-121.ngrok.io/next_word?name=$text'));
+    Response response =
+        await get(Uri.parse('$url_base_path/next_word?word=$text'));
     print(response.toString());
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
@@ -60,13 +62,14 @@ class _next_wordState extends State<next_word> {
             if (keys.contains(key)) {
               return;
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.space)) {
-              await call_api();
-              print("after api " + stringList.toString());
-            }
             setState(() {
               keys.add(key);
             });
+            if (event.isKeyPressed(LogicalKeyboardKey.space)) {
+              await call_api();
+              keys.clear();
+              print("after api " + stringList.toString());
+            }
           } else {
             setState(() {
               keys.remove(key);
@@ -76,15 +79,20 @@ class _next_wordState extends State<next_word> {
         child: Container(
           // color: Colors.red,
           child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 20),
             children: [
-              const Divider(
+              const SizedBox(
                 height: 100,
+                // color: Colors.transparent,
               ),
-              TextField(
-                controller: inputTextController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter the text to check spelling',
+              SizedBox(
+                width: 100,
+                child: TextField(
+                  controller: inputTextController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter the text to check spelling',
+                  ),
                 ),
               ),
 
@@ -92,31 +100,32 @@ class _next_wordState extends State<next_word> {
                 height: 100,
               ),
 
-              Center(
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.teal,
-                    disabledForegroundColor: Colors.yellow.withOpacity(0.38),
-                    side: BorderSide(color: Colors.teal, width: 2),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25))),
-                  ),
-                  onPressed: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                    child: Text('Find',
-                        style: TextStyle(
-                            color: Colors.teal,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500)),
-                  ),
-                ),
-              ),
+              // Center(
+              //   child: TextButton(
+              //     style: TextButton.styleFrom(
+              //       foregroundColor: Colors.teal,
+              //       disabledForegroundColor: Colors.yellow.withOpacity(0.38),
+              //       side: BorderSide(color: Colors.teal, width: 2),
+              //       shape: const RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.all(Radius.circular(25))),
+              //     ),
+              //     onPressed: () {},
+              //     child: const Padding(
+              //       padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              //       child: Text('Find',
+              //           style: TextStyle(
+              //               color: Colors.teal,
+              //               fontSize: 14,
+              //               fontWeight: FontWeight.w500)),
+              //     ),
+              //   ),
+              // ),
 // Generated code for this Button Widget..
-              const Divider(
-                height: 20,
-              ),
-              const Center(child: DropdownButtonExample())
+//               const Divider(
+//                 height: 20,
+//               ),
+              if (stringList.isNotEmpty)
+                const Center(child: DropdownButtonExample())
             ],
           ),
         ),
