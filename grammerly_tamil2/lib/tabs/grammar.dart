@@ -55,12 +55,13 @@ class _grammarState extends State<grammar> {
                   print(inputTextController.text);
                   text = inputTextController.text;
                   Response response = await get(Uri.parse(
-                      '$url_base_path/grammar_suggestion?name=grammar: $text'));
+                      '$url_base_path/grammar_suggestion?word=grammar: $text'));
                   // Await the http get response, then decode the json-formatted response.
                   print(response.toString());
                   if (response.statusCode == 200) {
                     var jsonResponse = convert.jsonDecode(response.body);
                     print(jsonResponse.toString());
+                    text1 = jsonResponse.toString();
                     setState(() {});
                   } else {
                     print(
@@ -92,7 +93,7 @@ class _grammarState extends State<grammar> {
                 decoration:
                     BoxDecoration(border: Border.all(color: Colors.blueAccent)),
                 child: Text(
-                  text,
+                  text1,
                   textAlign: TextAlign.center,
                 ),
               )

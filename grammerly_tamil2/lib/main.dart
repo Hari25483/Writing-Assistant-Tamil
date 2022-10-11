@@ -4,7 +4,7 @@ import 'package:grammerly_tamil2/tabs/next_word.dart';
 import 'package:grammerly_tamil2/tabs/spelling.dart';
 import 'package:grammerly_tamil2/tabs/synonyms.dart';
 
-String url_base_path = "http://35eb-35-194-156-222.ngrok.io/";
+String url_base_path = "http://2f12-35-194-228-82.ngrok.io/";
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
