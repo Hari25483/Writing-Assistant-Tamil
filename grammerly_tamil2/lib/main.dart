@@ -4,7 +4,7 @@ import 'package:grammerly_tamil2/tabs/next_word.dart';
 import 'package:grammerly_tamil2/tabs/spelling.dart';
 import 'package:grammerly_tamil2/tabs/synonyms.dart';
 
-String url_base_path = "http://2f12-35-194-228-82.ngrok.io/";
+String url_base_path = "http://5c01-104-154-216-216.ngrok.io/";
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: const Color(0xFF008080),
           automaticallyImplyLeading: false,
           title: const Text(
-            'Grammarly',
+            'Tamil Writing Aid ',
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,

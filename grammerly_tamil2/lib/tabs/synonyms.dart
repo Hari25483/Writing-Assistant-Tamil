@@ -136,6 +136,7 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
         setState(() {
           dropdownValue = value!;
           inputTextController.text = "$text $dropdownValue";
+          stringList = [];
         });
       },
       items: stringList.map<DropdownMenuItem<String>>((String value) {

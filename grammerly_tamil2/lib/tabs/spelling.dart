@@ -191,18 +191,14 @@ class _spellingState extends State<spelling> {
 
   Future<void> call_api() async {
     show_text = false;
-    //print("apicalled");
     text = inputTextController.text;
     String s = text.trim();
     String lastWord = s.substring(s.lastIndexOf(" ") + 1);
-    // print(lastWord);
-    //print("api_text" + lastWord);
     Response response =
         await get(Uri.parse('$url_base_path/spelling?word=$lastWord'));
-    //print(response.toString());
+    print(response.toString());
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
-      //print(jsonResponse);
       if (jsonResponse == "Your word seems to be correct") {
         //print("Correct");
         correct = true;
@@ -245,7 +241,7 @@ class _spellingState extends State<spelling> {
               keys.add(key);
             });
             if (event.isKeyPressed(LogicalKeyboardKey.space)) {
-              print("in");
+              // print("in");
               await call_api();
 
               keys.clear();
@@ -379,6 +375,7 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
 
           inputTextController.text = "$output_text $dropdownValue";
           show_text = false;
+          stringList = [];
         });
       },
       items: stringList.map<DropdownMenuItem<String>>((String value) {

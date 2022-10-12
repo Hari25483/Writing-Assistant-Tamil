@@ -67,9 +67,6 @@ class _grammarState extends State<grammar> {
                     print(
                         'Request failed with status: ${response.statusCode}.');
                   }
-
-                  // print(await http.read(Uri.https('example.com', 'foobar.txt')));
-                  // text = "Hello";
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(left: 10.0, right: 10.0),
