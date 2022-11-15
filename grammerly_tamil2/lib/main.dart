@@ -4,10 +4,10 @@ import 'package:grammerly_tamil2/tabs/next_word.dart';
 import 'package:grammerly_tamil2/tabs/spelling.dart';
 import 'package:grammerly_tamil2/tabs/synonyms.dart';
 
-String urlBasePath = "http://7b98-34-125-21-83.ngrok.io";
+String url_base_path = "http://4ab0-34-142-206-175.ngrok.io";
 
 void main() {
-  runApp(const MaterialApp(home: MyApp()));
+  runApp(MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [spelling(), next_word(), Synonyms(), Grammar()],
         ),
       ),

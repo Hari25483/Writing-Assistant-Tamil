@@ -196,7 +196,7 @@ class _spellingState extends State<spelling> {
     String lastWord = s.substring(s.lastIndexOf(" ") + 1);
     print(lastWord);
     Response response =
-        await get(Uri.parse('$urlBasePath/spelling?word=$lastWord'));
+        await get(Uri.parse('$url_base_path/spelling?word=$lastWord'));
     print(response.toString());
     if (response.statusCode == 200) {
       print(response.body);

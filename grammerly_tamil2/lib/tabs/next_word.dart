@@ -28,7 +28,7 @@ class _next_wordState extends State<next_word> {
     text = inputTextController.text;
     print("api_text" + text);
     Response response =
-        await get(Uri.parse('$urlBasePath/next_word?word=$text'));
+        await get(Uri.parse('$url_base_path/next_word?word=$text'));
     print(response.toString());
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
@@ -98,7 +98,7 @@ class _next_wordState extends State<next_word> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.teal, width: 2.0),
                     ),
-                    hintText: 'Enter the text to check spelling',
+                    hintText: 'Enter the text to find next words',
                   ),
                 ),
               ),

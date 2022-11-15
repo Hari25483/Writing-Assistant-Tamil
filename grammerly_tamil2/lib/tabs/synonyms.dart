@@ -28,7 +28,7 @@ class _SynonymsState extends State<Synonyms> {
     text = inputTextController.text;
     print("api_text$text");
     Response response =
-        await get(Uri.parse('$urlBasePath/synonyms?word=$text'));
+        await get(Uri.parse('$url_base_path/synonyms?word=$text'));
     print(response.toString());
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
@@ -72,7 +72,7 @@ class _SynonymsState extends State<Synonyms> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.teal, width: 2.0),
                 ),
-                hintText: 'Enter the text to check spelling',
+                hintText: 'Enter the text to find synonyms',
               ),
             ),
 

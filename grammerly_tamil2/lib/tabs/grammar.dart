@@ -39,7 +39,7 @@ class _GrammarState extends State<Grammar> {
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.teal, width: 2.0),
                   ),
-                  hintText: 'Enter the text to check spelling'),
+                  hintText: 'Enter the text to find correct grammar'),
             ),
             const SizedBox(
               height: 100,
@@ -57,7 +57,7 @@ class _GrammarState extends State<Grammar> {
                 print(inputTextController.text);
                 text = inputTextController.text;
                 Response response = await get(Uri.parse(
-                    '$urlBasePath/grammar_suggestion?word=grammar: $text'));
+                    '$url_base_path/grammar_suggestion?word=grammar: $text'));
                 // Await the http get response, then decode the json-formatted response.
                 print(response.toString());
                 if (response.statusCode == 200) {
