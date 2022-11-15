@@ -1,7 +1,8 @@
+import 'dart:convert' as convert;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:convert' as convert;
 import 'package:http/http.dart';
 
 import '../main.dart';
@@ -91,6 +92,12 @@ class _next_wordState extends State<next_word> {
                   controller: inputTextController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.teal, width: 1.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.teal, width: 2.0),
+                    ),
                     hintText: 'Enter the text to check spelling',
                   ),
                 ),

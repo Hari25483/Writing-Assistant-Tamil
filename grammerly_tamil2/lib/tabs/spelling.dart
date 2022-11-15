@@ -155,15 +155,15 @@
 //   }
 // }
 
+import 'dart:convert' as convert;
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:convert' as convert;
-
 import 'package:http/http.dart';
 
 import '../main.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 List<dynamic> spell_suggestions = [""];
 
@@ -194,10 +194,12 @@ class _spellingState extends State<spelling> {
     text = inputTextController.text;
     String s = text.trim();
     String lastWord = s.substring(s.lastIndexOf(" ") + 1);
+    print(lastWord);
     Response response =
         await get(Uri.parse('$url_base_path/spelling?word=$lastWord'));
     print(response.toString());
     if (response.statusCode == 200) {
+      print(response.body);
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse == "Your word seems to be correct") {
         //print("Correct");
@@ -241,7 +243,7 @@ class _spellingState extends State<spelling> {
               keys.add(key);
             });
             if (event.isKeyPressed(LogicalKeyboardKey.space)) {
-              // print("in");
+              print("in");
               await call_api();
 
               keys.clear();
@@ -269,10 +271,15 @@ class _spellingState extends State<spelling> {
                 controller: inputTextController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.teal, width: 2.0),
+                  ),
                   hintText: 'Enter the text to check spelling',
                 ),
               ),
-
               const SizedBox(
                 height: 100,
               ),

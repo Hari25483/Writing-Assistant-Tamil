@@ -1,7 +1,8 @@
+import 'dart:convert' as convert;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:convert' as convert;
 import 'package:http/http.dart';
 
 import '../main.dart';
@@ -65,6 +66,12 @@ class _synonymsState extends State<synonyms> {
               controller: inputTextController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.teal, width: 1.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.teal, width: 2.0),
+                ),
                 hintText: 'Enter the text to check spelling',
               ),
             ),
@@ -92,6 +99,43 @@ class _synonymsState extends State<synonyms> {
                           color: Colors.teal,
                           fontSize: 14,
                           fontWeight: FontWeight.w500)),
+                ),
+              ),
+            ),
+            Center(
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  foregroundColor: Colors.teal,
+                  disabledForegroundColor: Colors.yellow.withOpacity(0.38),
+                  side: const BorderSide(color: Colors.teal, width: 2),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(30))),
+                ),
+                onPressed: () async {
+                  await call_api();
+                },
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 30.0, vertical: 2.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text('Find',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500)),
+                    ],
+                  ),
                 ),
               ),
             ),
