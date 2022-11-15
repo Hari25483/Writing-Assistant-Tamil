@@ -196,7 +196,7 @@ class _spellingState extends State<spelling> {
     String lastWord = s.substring(s.lastIndexOf(" ") + 1);
     print(lastWord);
     Response response =
-        await get(Uri.parse('$url_base_path/spelling?word=$lastWord'));
+        await get(Uri.parse('$urlBasePath/spelling?word=$lastWord'));
     print(response.toString());
     if (response.statusCode == 200) {
       print(response.body);
@@ -280,33 +280,57 @@ class _spellingState extends State<spelling> {
                   hintText: 'Enter the text to check spelling',
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              if (stringList.isNotEmpty)
+                Wrap(
+                  children: [
+                    for (String word in stringList)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                        child: GestureDetector(
+                          onTap: () async {
+                            inputTextController.text = word;
+                            setState(() {});
+
+                            stringList = [];
+                            show_text = false;
+                            setState(() {});
+                          },
+                          child: Chip(
+                            label: Text(word),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               const SizedBox(
                 height: 100,
               ),
-              if (inputTextController.text.trim().isNotEmpty)
-                Visibility(
-                  visible: show_text,
-                  child: Center(
-                    child: AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                          'Your word seems wrong.',
-                          textStyle: const TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.redAccent,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          speed: const Duration(milliseconds: 1),
+              Visibility(
+                visible: stringList.isNotEmpty,
+                child: Center(
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                        'Your word seems wrong.',
+                        textStyle: const TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                      totalRepeatCount: 1,
-                      pause: const Duration(milliseconds: 1),
-                      displayFullTextOnTap: true,
+                        speed: const Duration(milliseconds: 1),
+                      ),
+                    ],
+                    totalRepeatCount: 1,
+                    pause: const Duration(milliseconds: 1),
+                    displayFullTextOnTap: true,
 
-                      // stopPauseOnTap: true,
-                    ),
+                    // stopPauseOnTap: true,
                   ),
                 ),
+              ),
               const SizedBox(
                 height: 100,
               ),
@@ -334,8 +358,6 @@ class _spellingState extends State<spelling> {
               const SizedBox(
                 height: 20,
               ),
-              if (stringList.isNotEmpty)
-                const Center(child: DropdownButtonExample())
             ],
           ),
         ),

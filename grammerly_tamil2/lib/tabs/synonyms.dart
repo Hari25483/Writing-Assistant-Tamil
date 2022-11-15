@@ -28,7 +28,7 @@ class _SynonymsState extends State<Synonyms> {
     text = inputTextController.text;
     print("api_text$text");
     Response response =
-        await get(Uri.parse('$url_base_path/synonyms?word=$text'));
+        await get(Uri.parse('$urlBasePath/synonyms?word=$text'));
     print(response.toString());
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
@@ -80,28 +80,6 @@ class _SynonymsState extends State<Synonyms> {
               height: 100,
             ),
 
-            Center(
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.teal,
-                  disabledForegroundColor: Colors.yellow.withOpacity(0.38),
-                  side: BorderSide(color: Colors.teal, width: 2),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(25))),
-                ),
-                onPressed: () async {
-                  await call_api();
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: Text('Find',
-                      style: TextStyle(
-                          color: Colors.teal,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500)),
-                ),
-              ),
-            ),
             Center(
               child: TextButton(
                 style: TextButton.styleFrom(

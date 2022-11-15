@@ -28,7 +28,7 @@ class _next_wordState extends State<next_word> {
     text = inputTextController.text;
     print("api_text" + text);
     Response response =
-        await get(Uri.parse('$url_base_path/next_word?word=$text'));
+        await get(Uri.parse('$urlBasePath/next_word?word=$text'));
     print(response.toString());
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
@@ -132,7 +132,25 @@ class _next_wordState extends State<next_word> {
 //                 height: 20,
 //               ),
               if (stringList.isNotEmpty)
-                const Center(child: DropdownButtonExample())
+                Wrap(
+                  children: [
+                    for (String word in stringList)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                        child: GestureDetector(
+                          onTap: () async {
+                            inputTextController.text = "$text $word";
+                            text = inputTextController.text.trim();
+                            await call_api();
+                            setState(() {});
+                          },
+                          child: Chip(
+                            label: Text(word),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
             ],
           ),
         ),
