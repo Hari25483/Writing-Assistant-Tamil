@@ -27,12 +27,14 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           backgroundColor: const Color(0xFF008080),
           automaticallyImplyLeading: false,
-          title: const Text(
-            'Tamil Writing Aid ',
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              color: Colors.white,
-              fontSize: 22,
+          title: Center(
+            child: const Text(
+              'Tamil Writing Aid ',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                color: Colors.white,
+                fontSize: 22,
+              ),
             ),
           ),
           bottom: const TabBar(
@@ -47,7 +49,7 @@ class _MyAppState extends State<MyApp> {
                 text: 'Synonyms',
               ),
               Tab(
-                text: 'Grammer Correction',
+                text: 'Grammar Correction',
               ),
             ],
           ),
