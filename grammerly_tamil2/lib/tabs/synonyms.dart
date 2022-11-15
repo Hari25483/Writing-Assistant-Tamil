@@ -77,9 +77,28 @@ class _SynonymsState extends State<Synonyms> {
             ),
 
             const SizedBox(
-              height: 100,
+              height: 60,
             ),
-
+            if (stringList.isNotEmpty)
+              Wrap(
+                children: [
+                  for (String word in stringList)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                      child: GestureDetector(
+                        onTap: () async {
+                          inputTextController.text = "$word";
+                          text = inputTextController.text.trim();
+                          await call_api();
+                          setState(() {});
+                        },
+                        child: Chip(
+                          label: Text(word),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             Center(
               child: TextButton(
                 style: TextButton.styleFrom(
@@ -121,8 +140,6 @@ class _SynonymsState extends State<Synonyms> {
             const SizedBox(
               height: 20,
             ),
-            if (stringList.isNotEmpty)
-              const Center(child: DropdownButtonExample())
           ],
         ),
       ),
