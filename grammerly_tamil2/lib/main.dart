@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         body: const TabBarView(
-          children: [spelling(), next_word(), synonyms(), grammar()],
+          children: [spelling(), next_word(), Synonyms(), grammar()],
         ),
       ),
     );

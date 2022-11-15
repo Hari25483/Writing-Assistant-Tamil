@@ -15,18 +15,18 @@ List<LogicalKeyboardKey> keys = [];
 String text = "";
 String text1 = "";
 
-class synonyms extends StatefulWidget {
-  const synonyms({Key? key}) : super(key: key);
+class Synonyms extends StatefulWidget {
+  const Synonyms({Key? key}) : super(key: key);
 
   @override
-  State<synonyms> createState() => _synonymsState();
+  State<Synonyms> createState() => _SynonymsState();
 }
 
-class _synonymsState extends State<synonyms> {
+class _SynonymsState extends State<Synonyms> {
   Future<void> call_api() async {
     print("apicalled");
     text = inputTextController.text;
-    print("api_text" + text);
+    print("api_text$text");
     Response response =
         await get(Uri.parse('$url_base_path/synonyms?word=$text'));
     print(response.toString());
@@ -35,7 +35,7 @@ class _synonymsState extends State<synonyms> {
 
       /// for casting
       stringList = jsonResponse.cast<String>();
-      print("String list" + stringList.toString());
+      print("String list$stringList");
       print("api finished");
 
       setState(() {});
@@ -46,7 +46,7 @@ class _synonymsState extends State<synonyms> {
 
   @override
   Widget build(BuildContext context) {
-    print("Rawkey" + stringList.toString());
+    print("Rawkey$stringList");
     void rebuild(Element el) {
       el.markNeedsBuild();
       el.visitChildren(rebuild);
@@ -116,11 +116,11 @@ class _synonymsState extends State<synonyms> {
                   await call_api();
                 },
                 child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 30.0, vertical: 2.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0, vertical: 2.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: const [
                       Icon(
                         Icons.search,
                         color: Colors.white,
