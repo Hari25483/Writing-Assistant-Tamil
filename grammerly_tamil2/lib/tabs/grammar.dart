@@ -41,7 +41,7 @@ class _grammarState extends State<grammar> {
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.teal, width: 2.0),
                   ),
-                  hintText: 'Enter the text to check spelling'),
+                  hintText: 'Enter the text to find correct grammar'),
             ),
             const SizedBox(
               height: 100,
